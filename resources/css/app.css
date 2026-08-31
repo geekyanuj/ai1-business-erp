@@ -1,0 +1,11 @@
+/* resources/css/app.css */
+
+/* 1. Import Bootstrap CSS */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+/* 2. Import your custom styles (from your new location) */
+@import 'style.css'; 
+
+@import 'datatables.net-dt/css/dataTables.dataTables.css';
+

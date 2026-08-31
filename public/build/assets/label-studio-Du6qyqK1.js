@@ -1,0 +1,216 @@
+import { $ as E } from "./po-items-table-DLl3eRRB.js";
+import "./dataTables-t187tmru.js";
+const c = new Map();
+function x() {
+    return new Set(
+        [...document.querySelectorAll('input[name="fields[]"]:checked')].map(
+            (s) => s.value,
+        ),
+    );
+}
+function S() {
+    const s = document.getElementById("studioPrintForm");
+    (s.querySelectorAll(".selected-item-input").forEach((n) => n.remove()),
+        c.forEach((n) => {
+            const e = document.createElement("input");
+            ((e.type = "hidden"),
+                (e.name = "item_ids[]"),
+                (e.value = n.id),
+                (e.className = "selected-item-input"),
+                s.appendChild(e));
+        }));
+}
+function I() {
+    var o;
+    const s = document.getElementById("boxConfig"),
+        n = document.getElementById("boxRows"),
+        e =
+            ((o = document.querySelector('input[name="mode"]:checked')) == null
+                ? void 0
+                : o.value) === "box";
+    s.classList.toggle("d-none", !e);
+    const a = [
+        ...new Map(
+            [...c.values()].map((i) => [i.productId, i.partNo]),
+        ).entries(),
+    ];
+    n.innerHTML = a.length
+        ? a
+              .map(
+                  ([i, l]) =>
+                      `<div class="box-row-config"><span title="${l}">${l}</span><input class="form-control form-control-sm box-units" name="units_per_box[${i}]" type="number" min="1" placeholder="Units" required ${e ? "" : "disabled"}></div>`,
+              )
+              .join("")
+        : "Select labels to configure boxes by product.";
+}
+function y() {
+    var v, f;
+    const s = document.getElementById("previewGrid"),
+        n = x(),
+        e =
+            ((v = document.querySelector('input[name="mode"]:checked')) == null
+                ? void 0
+                : v.value) === "box",
+        a =
+            ((f = document.querySelector('input[name="page_size"]:checked')) ==
+            null
+                ? void 0
+                : f.value) || "A3",
+        o = Number(document.getElementById("studioColumns").value || 2),
+        i = Number(document.getElementById("studioRows").value || 5);
+    document.getElementById("previewSize").textContent = `${a} · ${o} × ${i}`;
+    const l = [...c.values()];
+    if (!l.length) {
+        s.innerHTML =
+            '<div class="preview-empty"><i class="fa-solid fa-eye-slash"></i><span>Select labels to preview the sheet.</span></div>';
+        return;
+    }
+    let h = l;
+    (e &&
+        ((h = []),
+        [...new Map(l.map((t) => [t.productId, t])).keys()].forEach((t) => {
+            var g;
+            const u = l.filter((d) => d.productId === t),
+                m = Number(
+                    ((g = document.querySelector(
+                        `input[name="units_per_box[${t}]"]`,
+                    )) == null
+                        ? void 0
+                        : g.value) || u.length,
+                );
+            for (let d = 0; d < u.length; d += Math.max(1, m))
+                h.push({ ...u[d], boxItems: u.slice(d, d + Math.max(1, m)) });
+        })),
+        (s.innerHTML = h
+            .map((t, u) => {
+                var b;
+                const m = t.boxItems || [t],
+                    g = Number(
+                        ((b = document.querySelector(
+                            `input[name="units_per_box[${t.productId}]"]`,
+                        )) == null
+                            ? void 0
+                            : b.value) || m.length,
+                    ),
+                    d = e ? Math.min(g, m.length) : 1,
+                    r = [];
+                return (
+                    n.has("client_name") &&
+                        t.client &&
+                        r.push(
+                            `<div class="preview-line"><strong>Client:</strong> ${t.client}</div>`,
+                        ),
+                    n.has("client_part_no") &&
+                        t.clientPart &&
+                        r.push(
+                            `<div class="preview-line"><strong>Client part:</strong> ${t.clientPart}</div>`,
+                        ),
+                    n.has("lot_no") &&
+                        r.push(
+                            `<div class="preview-line"><strong>Lot:</strong> ${t.lot}</div>`,
+                        ),
+                    n.has("quantity") &&
+                        r.push(
+                            `<div class="preview-line"><strong>Qty:</strong> ${d} PCS</div>`,
+                        ),
+                    n.has("item_code") &&
+                        r.push(
+                            `<div class="preview-code">${e ? m.map((w) => w.code).join(", ") : t.code}</div>`,
+                        ),
+                    n.has("description") &&
+                        r.push(
+                            `<div class="preview-line">${t.description || ""}</div>`,
+                        ),
+                    `<article class="label-preview">${n.has("artwork") ? '<img class="logo-preview" src="/images/client-logo.jpg" alt="Client Logo"><div class="preview-art"><img src="/images/make-in-india.jpg" alt="Make in India"><img src="/images/msl1.jpg" alt="MSL"><img src="/images/rohs.jpg" alt="RoHS"><img src="/images/reach.jpg" alt="REACH"></div>' : ""}${n.has("part_no") ? `<div class="preview-part">${t.partNo}</div>` : ""}${e ? `<div class="preview-line"><strong>Box:</strong> ${u + 1}</div>` : ""}${r.join("")}</article>`
+                );
+            })
+            .join("")));
+}
+function p() {
+    ((document.getElementById("selectedCount").textContent = c.size),
+        (document.getElementById("printSelected").disabled = c.size === 0),
+        (document.getElementById("capacity").textContent =
+            Number(document.getElementById("studioColumns").value || 1) *
+            Number(document.getElementById("studioRows").value || 1)),
+        S(),
+        I(),
+        y());
+}
+function $() {
+    const s = E("#studioLabelsTable");
+    if (!s.length) return;
+    const n = s.data("url");
+    (s.DataTable({
+        processing: !0,
+        serverSide: !0,
+        ajax: n,
+        pageLength: 10,
+        responsive: !0,
+        columns: [
+            {
+                data: "select_data",
+                orderable: !1,
+                searchable: !1,
+                className: "text-center",
+                render: (e, a, o) =>
+                    `<input class="form-check-input studio-label-check" type="checkbox" data-label="${encodeURIComponent(JSON.stringify(o.select_data))}" ${c.has(o.select_data.id) ? "checked" : ""}>`,
+            },
+            {
+                data: "part_no",
+                orderable: !1,
+                searchable: !1,
+                className: "fw-semibold",
+            },
+            {
+                data: "category",
+                orderable: !1,
+                searchable: !1,
+                render: (e) => `<span class="category-chip">${e}</span>`,
+            },
+            { data: "lot_no", orderable: !1, searchable: !1 },
+            {
+                data: "client_name",
+                orderable: !1,
+                searchable: !1,
+                defaultContent: "-",
+            },
+            {
+                data: "item_code",
+                name: "item_code",
+                render: (e) => `<code>${e}</code>`,
+            },
+        ],
+        drawCallback: () => {
+            document.querySelectorAll(".studio-label-check").forEach((e) =>
+                e.addEventListener("change", () => {
+                    const a = JSON.parse(decodeURIComponent(e.dataset.label));
+                    (e.checked ? c.set(a.id, a) : c.delete(a.id), p());
+                }),
+            );
+        },
+    }),
+        document.getElementById("toggleAll").addEventListener("click", (e) => {
+            const a = [...document.querySelectorAll(".studio-label-check")],
+                o = a.some((i) => !i.checked);
+            (a.forEach((i) => {
+                const l = JSON.parse(decodeURIComponent(i.dataset.label));
+                ((i.checked = o), o ? c.set(l.id, l) : c.delete(l.id));
+            }),
+                (e.currentTarget.innerHTML = o
+                    ? '<i class="fa-solid fa-xmark me-1"></i> Clear visible'
+                    : '<i class="fa-solid fa-check-double me-1"></i> Select visible'),
+                p());
+        }));
+}
+document.addEventListener("DOMContentLoaded", () => {
+    ($(),
+        document
+            .querySelectorAll(
+                'input[name="mode"], input[name="page_size"], input[name="fields[]"]',
+            )
+            .forEach((s) => s.addEventListener("change", p)),
+        document.getElementById("boxRows").addEventListener("input", y),
+        document.getElementById("studioColumns").addEventListener("input", p),
+        document.getElementById("studioRows").addEventListener("input", p),
+        p());
+});

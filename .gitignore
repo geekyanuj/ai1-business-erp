@@ -1,0 +1,19 @@
+# Package Managers & Dependencies
+/node_modules
+/vendor
+
+# Vite & Frontend Build Artifacts
+# /public/build
+# /public/hot
+
+# Environment & Secrets
+.env
+.env.backup
+.env.production
+.env.development
+.env.*.local
+
+# Testing & Framework Caches
+/.phpunit.cache
+/storage/*.key
+/storage/pail

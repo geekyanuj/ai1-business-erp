@@ -1,0 +1,506 @@
+:root {
+    /* Primary Colors */
+    --primary-dark: #0c3365;
+    --primary-color: #3278d2;
+    --secondary-color: #01a7c8;
+    --bg-primary-color: #293681;
+
+
+    --bg-gradient: linear-gradient(135deg,
+            #0B2A5B 0%,
+            #0756C9 50%,
+            #00AFC7 100%);
+
+
+    /* Background Colors */
+    --bg-sidebar: #d9dce2;
+    --bg-content: #eff2f4;
+    --bg-white: #fff;
+    --bg-disabled: #e9ecef;
+    --bg-table-header: #d2d2d2;
+    --bg-highlight: #f8f9fa;
+    --bg-icon-hover: rgb(202, 196, 174);
+
+    /* Text Colors */
+    --text-dark: #161616;
+    --text-black: #000;
+    --text-body: #212529;
+    --text-white: #fff;
+
+    /* Border Colors */
+    --border-light: #eeeeee;
+    --border-input: #ced4da;
+    --border-focus: #86b7fe;
+
+    /* Status Colors */
+    --danger: red;
+
+    /* Shadows */
+    --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-card-hover: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-input-focus: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    --shadow-dropdown-light: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.075);
+}
+
+
+/* Utility Classes */
+
+.bg-my-primary {
+    background-color: var(--primary-dark) !important;
+}
+
+.my-primary-color {
+    color: var(--primary-color) !important;
+}
+
+.camel-case-text {
+    text-transform: capitalize;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+}
+
+
+/*-------------- Login & Register Pages------------- */
+
+.btn1 {
+    background-color: var(--secondary-color);
+    color: #fff;
+    transition:
+        background-color 0.5s ease,
+        color 0.5s ease,
+        outline 0.5s ease;
+}
+
+.btn1:hover {
+    background-color: #fff;
+    color: var(--primary-color);
+    outline: 1px solid var(--primary-color);
+}
+
+.btn2 {
+    background-color: #8b8bdf;
+    color: #fff;
+}
+
+.btn2:hover {
+    background-color: #fff;
+    color: #8b8bdf;
+    outline: 1px solid #8b8bdf;
+}
+
+.link-back {
+    color: var(--primary-color);
+}
+
+.image-container {
+    border-radius: 20px;
+    background: var(--bg-gradient);
+}
+
+.login-banner{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translateX(80px) scale(0.9);
+}
+
+.btn-login {
+    padding: 4px 15px;
+    background: var(--secondary-color);
+    color: #fff;
+    transition:
+        background 0.5s ease,
+        color 0.5s ease,
+        border 0.5s ease;
+    border: 1px solid transparent;
+}
+
+.btn-login:hover {
+    background: #fff;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.register-link {
+    color: var(--secondary-color);
+}
+
+.logo {
+    height: 80px;
+    width: 200px;
+}
+
+/*------------ Login & Register Pages------------  */
+
+/*------------------ Sidebar-------------------- */
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-dark);
+    overflow-y: auto;
+    min-width: 250px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-light) transparent;
+    -ms-overflow-style: none;
+     scrollbar-width: none;
+    height: auto;
+    min-height: 100vh;
+}
+
+/* Nav link styles */
+.sidebar .nav-item {
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-link {
+    color: var(--text-dark);
+}
+
+.sidebar .nav-link.active {
+    background-color: var(--primary-color);
+}
+
+.sidebar .nav-link:hover {
+    background-color: var(--primary-color);
+    color: #f8f9fa;
+}
+
+/*------------------ Sidebar-------------------- */
+
+/* Main content wrapper */
+.content {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: var(--bg-content);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inside content (scrolls with content) */
+.wrapper {
+    padding: 20px;
+}
+
+.transition-icon {
+    transition: transform 0.3s;
+}
+
+.nav-link[aria-expanded="true"] .transition-icon {
+    transform: rotate(180deg);
+}
+
+.btn-toggle-nav .nav-link {
+    padding-left: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.btn-toggle-nav .nav-link.active {
+    color: #fff;
+    background-color: var(--primary-color);
+}
+
+
+.searchBox,
+.msgBox,
+.notificationBox,
+.userDropdown {
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 6px 10px;
+}
+
+.searchBox .fa-search {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.dropdown-menu {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.userDropdown .fa-user {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.userDropdown .btn {
+    background: none;
+    border: none;
+    /* font-size: 18px; */
+}
+
+.userDropdown .btn:hover {
+    color: var(--primary-color);
+}
+
+.msgBox {
+    position: relative;
+    display: inline-block;
+}
+
+.msgBox .fa-commenting {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.notificationBox {
+    position: relative;
+    display: inline-block;
+}
+
+.notificationBox .fa-bell {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+.notificationBox .count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    min-width: 18px;
+    text-align: center;
+}
+
+.lang-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.sidebar {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.dashboard-card {
+    min-width: 150px;
+    height: 140px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+.icons-dashboard-container {
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}
+
+
+
+.icons-dashboard {
+    font-size: 25px;
+    color: #fff;
+    background-color: var(--primary-color);
+}
+
+.doughnut-container {
+    max-width: 320px;
+    margin: auto;
+    padding: 5px 0px;
+    min-height: 300px;
+}
+
+.line-chart-container {
+    margin: auto;
+    padding: 5px;
+    min-height: 300px;
+}
+
+canvas {
+    height: auto;
+    width: 100% !important;
+}
+
+/* .recent-activity-item{
+    font-size: 10px;
+} */
+.recent-activity-scroll {
+    max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+/* Filter Container - smooth expand */
+#filterContainer {
+    max-height: 0;
+    opacity: 0;
+    /* overflow: hidden; */
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+    display: flex;
+    /* keep layout stable */
+    gap: 10px;
+}
+
+/* When opened */
+#filterContainer.show {
+    max-height: 300px;
+    /* big enough to show all content */
+    opacity: 1;
+}
+
+.small-text {
+    font-size: 0.9rem;
+}
+
+.icon-box {
+    cursor: pointer;
+}
+
+.icon-box:hover {
+    background-color: rgb(202, 196, 174) !important;
+}
+
+.custom-card {
+    width: 200px;
+}
+
+.custom-card:hover {
+    background-color: #00ff22a9;
+}
+
+.float-right {
+    float: right;
+}
+
+.icon-box-2 {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: var(--primary-orange);
+    transition: background-color 0.3s ease;
+    color: #fff;
+}
+
+.table.dataTable {
+    font-size: 13px !important;
+}
+
+.scroll-card {
+    max-height: 300px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.required-field::after {
+    content: "*";
+    color: red;
+}
+
+#itemsTable thead tr th {
+    background-color: #d2d2d2 !important;
+    color: #000 !important;
+    text-align: center;
+}
+
+/* ----------------------------------------------------------
+   CHOICES.JS → BOOTSTRAP 5 FORM-SELECT THEME
+---------------------------------------------------------- */
+
+.choices[data-type*="select-one"] .choices__inner {
+    min-height: calc(0.1em + .1rem + 0px) !important;
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+    background-color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.choices .choices__inner {
+    padding: .16rem .5rem !important;
+}
+
+.choices__list--single {
+    padding: 3px 16px 3px 4px !important;
+    width: 100%;
+}
+
+.choices__placeholder {
+    opacity: 1 !important;
+}
+
+.choices__list--dropdown {
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+    margin-top: 20px;
+    box-shadow: 0 0.25rem .5rem rgba(0, 0, 0, .075);
+    z-index: 9999;
+}
+
+
+.choices__item--selectable.is-highlighted {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.choices.is-focused .choices__inner {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+}
+
+.choices__input--cloned {
+    margin: 0;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.choices {
+    margin: 0 !important;
+    min-width: 300px;
+}
+
+
+.choices__list--dropdown .is-disabled {
+    opacity: .4 !important;
+    pointer-events: none !important;
+}
+
+.filter1 div.choices div.choices__inner {
+    min-width: 200px !important;
+}
+
+.input-disabled-look {
+    background-color: #e9ecef !important;
+    pointer-events: none;
+    /* Prevents mouse interaction */
+    cursor: not-allowed;
+}
+
+/* Ensure Offcanvas appears on top of Modals */
+.offcanvas {
+    z-index: 1060 !important;
+    /* Bootstrap modal z-index is 1055, backdrop is 1050 */
+}
+
+.offcanvas-backdrop {
+    z-index: 1059 !important;
+}
