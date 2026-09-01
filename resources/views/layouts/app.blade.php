@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title') - Inventory ERP | TE TechSolution</title>
+  <title>@yield('title') - AI1 Business ERP</title>
 
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   @stack('styles')

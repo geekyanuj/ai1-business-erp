@@ -413,7 +413,7 @@ public function store(Request $request)
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->SetCreator(auth()->user()->name);
-        $pdf->SetAuthor('TE Tech Solution - Inventory ERP');
+        $pdf->SetAuthor('AI1 Business ERP');
         $pdf->SetTitle("Label - Lot {$label->lot_no}");
         $pdf->SetSubject('Unit Product Labels');
         $pdf->SetKeywords('Labels, Barcode, QR');
@@ -451,7 +451,7 @@ public function store(Request $request)
 
             /* ================= LEFT SIDE ================= */
             $pdf->SetFont('helvetica', 'B', 7);
-            $pdf->Text($x + 1, $y + 3, "(1P) TE Part No.: $partNo");
+            $pdf->Text($x + 1, $y + 3, "(1P) AI1 Part No.: $partNo");
 
             $pdf->write1DBarcode(
                 $partNo,
@@ -519,7 +519,7 @@ public function store(Request $request)
 
             $pdf->Image(public_path('images/client-logo.jpg'), $x + 101, $y + 0.5, 16);
 
-            $qrLines = ['TE PART NO: ' . $partNo];
+            $qrLines = ['AI1 PART NO: ' . $partNo];
             if (filled($clientName)) $qrLines[] = 'CLIENT: ' . $clientName;
             if (filled($clientPartNo)) $qrLines[] = 'CLIENT PART NO: ' . $clientPartNo;
             $qrLines[] = 'ITEM CODE: ' . $itemCode;
@@ -1014,7 +1014,7 @@ public function printBoxLabels(Request $request, $id)
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->SetCreator(auth()->user()->name);
-        $pdf->SetAuthor('TE Tech Solution - Inventory ERP');
+        $pdf->SetAuthor('AI1 Business ERP');
         $pdf->SetTitle('Label Studio - ' . $data['page_size']);
 
         foreach ($cards->chunk($data['columns'] * $data['rows']) as $pageItems) {
