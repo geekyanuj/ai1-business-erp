@@ -23,7 +23,6 @@
     </div>
 
 
-
     @if (session('success'))
         <div id="success-message" style="
                                     position: fixed;
