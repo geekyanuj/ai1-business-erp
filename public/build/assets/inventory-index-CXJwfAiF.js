@@ -1,4 +1,4 @@
-import{$ as a}from"./po-items-table-DLl3eRRB.js";function i(t){const e=a(`.inventory-grid[data-type="${t}"]`),s=e.closest(".inventory-section");a.ajax({url:e.data("url"),method:"GET",data:{inventory_type:t,search_text:a("#universalSearch").val(),location:s.find(".location-filter").val()},beforeSend(){e.html(`
+import{$ as a}from"./jquery-DLl3eRRB.js";function i(t){const e=a(`.inventory-grid[data-type="${t}"]`),s=e.closest(".inventory-section");a.ajax({url:e.data("url"),method:"GET",data:{inventory_type:t,search_text:a("#universalSearch").val(),location:s.find(".location-filter").val()},beforeSend(){e.html(`
                 <div class="col-12 text-center py-4 text-muted">
                     Loading...
                 </div>

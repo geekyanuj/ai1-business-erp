@@ -1,4 +1,4 @@
-import{$ as t}from"./po-items-table-DLl3eRRB.js";t(document).ready(function(){let e=t("#bom-items tbody tr").length;t("#add-row").on("click",function(){const o=t("#bom-items").data("inventories");let a='<option value="">-- Select Raw Material --</option>';o.forEach(n=>{a+=`<option value="${n.material_name}" data-uom="${n.uom}">${n.material_name}</option>`});const i=`
+import{$ as t}from"./jquery-DLl3eRRB.js";t(document).ready(function(){let e=t("#bom-items tbody tr").length;t("#add-row").on("click",function(){const o=t("#bom-items").data("inventories");let a='<option value="">-- Select Raw Material --</option>';o.forEach(n=>{a+=`<option value="${n.material_name}" data-uom="${n.uom}">${n.material_name}</option>`});const i=`
             <tr>
                 <td>
                     <select name="items[${e}][material_name]" class="form-select material-select" required>

@@ -29,3 +29,6 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Choices from 'choices.js';
 import 'choices.js/public/assets/styles/choices.min.css'; 
 window.Choices = Choices; // Expose globally for use in other modules
+
+// Include images that need to be processed by Vite
+import '../images/login-banner.webp';

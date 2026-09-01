@@ -1,0 +1,1 @@
+import{$ as t}from"./jquery-DLl3eRRB.js";t(document).on("click",".edit-product-btn",function(){let o=t(this).data("product");t("#editProductId").val(o.id),t("#editProductPartNo").val(o.our_part_no),t("#editProductDescription").val(o.description),t("#editProductCategory").val(o.category),t("#editProductSpecs").val(o.specs),t("#editProductForm").attr("action","/products/"+o.id)});
