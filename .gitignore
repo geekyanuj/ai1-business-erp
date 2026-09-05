@@ -1,9 +1,9 @@
 # Package Managers & Dependencies
 /node_modules
-/vendor
+/vendor/
 
 # Vite & Frontend Build Artifacts
-/public/build
+/public/build/
 /public/hot
 
 # Environment & Secrets

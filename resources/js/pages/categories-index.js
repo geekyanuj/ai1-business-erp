@@ -117,7 +117,7 @@ export function handleAddCategory() {
 
             success: function (response) {
                 if (response.success) {
-                    $("#addCategoryModal").modal("hide");
+                    hideModal("addCategoryModal");
 
                     resetAddCategoryForm();
 
@@ -215,7 +215,7 @@ export function handleUpdateCategory() {
 
             success: function (response) {
                 if (response.success) {
-                    $("#editCategoryModal").modal("hide");
+                    hideModal("editCategoryModal");
 
                     categoriesTable.ajax.reload(null, false);
 
@@ -372,7 +372,9 @@ export function handleSaveSubCategory() {
 
             success: function (response) {
                 if (response.success) {
-                    $("#addSubCategoryModal").modal("hide");
+                    hideModal("addSubCategoryModal");
+
+                    $form[0].reset();
 
                     loadCategory(currentCategoryId);
 
@@ -522,7 +524,7 @@ export function handleConfirmDeleteCategory() {
 
             success: function (response) {
                 if (response.success) {
-                    $("#deleteCategoryModal").modal("hide");
+                    hideModal("deleteCategoryModal");
 
                     categoriesTable.ajax.reload(null, false);
 
@@ -537,6 +539,14 @@ export function handleConfirmDeleteCategory() {
     });
 }
 
+function hideModal(id) {
+    const modalElement = document.getElementById(id);
+
+    if (modalElement) {
+        bootstrap.Modal.getOrCreateInstance(modalElement).hide();
+    }
+}
+
 // ============================================================
 // Utility
 // ============================================================
@@ -548,10 +558,19 @@ function escapeHtml(value) {
 }
 
 function showSuccessMessage(message) {
-    // If you already have a toast system,
-    // replace this with your toast function.
+    $("#category-success-message").remove();
 
-    console.log(message);
+    const $message = $(
+        '<div id="category-success-message" class="flash-message flash-success" role="status" aria-live="polite"></div>',
+    ).text(message || "Saved successfully.");
+
+    $("body").append($message);
+
+    window.setTimeout(function () {
+        $message.fadeOut(250, function () {
+            $(this).remove();
+        });
+    }, 3000);
 }
 
 function handleAjaxError(xhr) {

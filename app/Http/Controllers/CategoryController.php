@@ -66,11 +66,13 @@ class CategoryController extends Controller
 
         $validated['is_active'] = $request->boolean('is_active', true);
 
-        Category::create($validated);
+        $category = Category::create($validated);
 
-        return redirect()
-            ->route('categories.index')
-            ->with('success', 'Category created successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Category created successfully.',
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -80,7 +82,10 @@ class CategoryController extends Controller
     {
         $category->load('subCategories');
 
-        return response()->json($category);
+        return response()->json([
+            'success' => true,
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -105,9 +110,10 @@ class CategoryController extends Controller
 
         $category->update($validated);
 
-        return redirect()
-            ->route('categories.index')
-            ->with('success', 'Category updated successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully.',
+        ]);
     }
 
     /**
@@ -116,16 +122,18 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->products()->exists()) {
-            return redirect()
-                ->route('categories.index')
-                ->with('error', 'Cannot delete category because products are assigned to it.');
+            return response()->json([
+                'success' => false,
+                'message' => 'This category cannot be deleted because products are assigned to it.',
+            ], 422);
         }
 
         $category->delete();
 
-        return redirect()
-            ->route('categories.index')
-            ->with('success', 'Category deleted successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Category deleted successfully.',
+        ]);
     }
 
     /**
@@ -149,13 +157,98 @@ class CategoryController extends Controller
     public function subCategories(Category $category)
     {
         $subCategories = $category->subCategories()
-            ->where('is_active', true)
             ->orderBy('name')
-            ->get([
-                'id',
-                'name',
-            ]);
+            ->get();
 
         return response()->json($subCategories);
+    }
+
+    /**
+     * Store a subcategory.
+     */
+    public function storeSubCategory(Request $request, Category $category)
+    {
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:150',
+                'unique:sub_categories,name,NULL,id,category_id,' . $category->id,
+            ],
+            'is_active' => [
+                'nullable',
+                'boolean',
+            ],
+        ]);
+
+        $validated['category_id'] = $category->id;
+        $validated['is_active'] = $request->boolean('is_active', true);
+
+        $subCategory = SubCategory::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sub category created successfully.',
+            'sub_category' => $subCategory,
+        ]);
+    }
+
+    /**
+     * Update a subcategory.
+     */
+    public function updateSubCategory(
+        Request $request,
+        Category $category,
+        SubCategory $subCategory
+    ) {
+        if ($subCategory->category_id !== $category->id) {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:150',
+                'unique:sub_categories,name,' . $subCategory->id . ',id,category_id,' . $category->id,
+            ],
+            'is_active' => [
+                'nullable',
+                'boolean',
+            ],
+        ]);
+
+        $validated['is_active'] = $request->boolean('is_active');
+
+        $subCategory->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sub category updated successfully.',
+        ]);
+    }
+
+    /**
+     * Delete a subcategory when no products use it.
+     */
+    public function destroySubCategory(Category $category, SubCategory $subCategory)
+    {
+        if ($subCategory->category_id !== $category->id) {
+            abort(404);
+        }
+
+        if ($subCategory->products()->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This sub category cannot be deleted because products are assigned to it.',
+            ], 422);
+        }
+
+        $subCategory->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sub category deleted successfully.',
+        ]);
     }
 }

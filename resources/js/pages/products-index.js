@@ -87,6 +87,7 @@ export function initializeProductsTable(tableSelector, ajaxUrl) {
 // Load Categories
 // ---------------------------
 export function loadCategories() {
+    console.log("Loading categories...");
     return $.ajax({
         url: "/categories/options",
         type: "GET",

@@ -49,13 +49,69 @@
 
 
         {{-- Products --}}
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="{{ route('products.index') }}"
             class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Products', 'Product Details']) ? 'active' : '' }}">
             <i class="fa-solid fa-layer-group me-2"></i>
             <span>Products</span>
           </a>
+        </li> -->
+
+        {{-- Product Submenu --}}
+        @php
+        $currentTitle = trim($__env->yieldContent('title'));
+
+          $productTitles = [
+            'Products',
+            'Product List',
+            'Product Details',
+            'Categories',
+            'Category Details',
+          ];
+
+          $isProductActive = in_array($currentTitle, $productTitles);
+        @endphp
+
+        <li class="nav-item">
+
+          <a href="#productSubmenu"
+            class="nav-link d-flex justify-content-between align-items-center {{ $isProductActive ? 'active' : '' }}"
+            data-bs-toggle="collapse" role="button" aria-expanded="{{ $isProductActive ? 'true' : 'false' }}"
+            aria-controls="productSubmenu">
+            <span>
+              <i class="fa-solid fa-boxes-stacked me-2"></i>
+              Products
+            </span>
+
+            <i class="fas fa-chevron-down transition-icon"></i>
+          </a>
+
+
+          <div id="productSubmenu" class="collapse {{ $isProductActive ? 'show' : '' }}">
+
+            <ul class="list-unstyled ps-3 small">
+
+              <li class="mt-1">
+                <a href="{{ route('products.index') }}"
+                  class="nav-link {{ in_array($currentTitle, ['Products', 'Product Details']) ? 'active' : '' }}">
+                  Product List
+                </a>
+              </li>
+
+
+              <li class="mt-1">
+                <a href="{{ route('categories.index') }}"
+                  class="nav-link {{ $currentTitle === 'Categories' ? 'active' : '' }}">
+                  Categories
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
         </li>
+
 
 
         {{-- Clients --}}
@@ -88,8 +144,7 @@
         {{-- Orders --}}
         @php
 
-          $currentTitle = trim($__env->yieldContent('title'));
-
+          
           $orderTitles = [
             'Purchase Orders',
             'Purchase Order Details',
