@@ -3,24 +3,40 @@
     "file": "assets/choices-BxcHAull.js",
     "name": "choices"
   },
-  "_dataTables-CGqb2kQY.js": {
-    "file": "assets/dataTables-CGqb2kQY.js",
+  "_clients-index-C90AJKbt.js": {
+    "file": "assets/clients-index-C90AJKbt.js",
+    "name": "clients-index",
+    "imports": [
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_choices-BxcHAull.js"
+    ]
+  },
+  "_dataTables-t187tmru.js": {
+    "file": "assets/dataTables-t187tmru.js",
     "name": "dataTables",
     "imports": [
-      "_jquery-DLl3eRRB.js"
+      "resources/js/modules/po-items-table.js"
     ]
   },
-  "_jquery-DLl3eRRB.js": {
-    "file": "assets/jquery-DLl3eRRB.js",
-    "name": "jquery"
-  },
-  "_jszip.min-DkSqpscl.js": {
-    "file": "assets/jszip.min-DkSqpscl.js",
+  "_jszip.min-B_Iqyv4e.js": {
+    "file": "assets/jszip.min-B_Iqyv4e.js",
     "name": "jszip.min",
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js"
     ]
+  },
+  "_po-items-table-DMfiW0QU.js": {
+    "file": "assets/po-items-table-DMfiW0QU.js",
+    "name": "po-items-table",
+    "imports": [
+      "resources/js/modules/po-items-table.js"
+    ]
+  },
+  "_sales-items-table-BKHtIWdD.js": {
+    "file": "assets/sales-items-table-BKHtIWdD.js",
+    "name": "sales-items-table"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
     "file": "assets/fa-brands-400-BfBXV7Mm.woff2",
@@ -39,21 +55,25 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DzKNUJ0O.css",
+    "file": "assets/app-Bh4IQI9P.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/images/login-banner.webp": {
-    "file": "assets/login-banner-C13-ccx6.webp",
+    "file": "assets/login-banner-DWqnX8Ei.webp",
     "src": "resources/images/login-banner.webp"
   },
+  "resources/images/logo-wide.webp": {
+    "file": "assets/logo-wide-DxamxkKI.webp",
+    "src": "resources/images/logo-wide.webp"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-D2nteEBI.js",
+    "file": "assets/app-CNrh52NJ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
+      "resources/js/modules/po-items-table.js",
       "_choices-BxcHAull.js"
     ],
     "css": [
@@ -67,38 +87,35 @@
     ]
   },
   "resources/js/modules/po-items-table.js": {
-    "file": "assets/po-items-table-xeELqT5s.js",
+    "file": "assets/po-items-table-DLl3eRRB.js",
     "name": "po-items-table",
     "src": "resources/js/modules/po-items-table.js",
-    "isEntry": true,
-    "imports": [
-      "_jquery-DLl3eRRB.js"
-    ]
+    "isEntry": true
   },
   "resources/js/modules/sales-items-table.js": {
-    "file": "assets/sales-items-table-BKHtIWdD.js",
+    "file": "assets/sales-items-table-l0sNRNKZ.js",
     "name": "sales-items-table",
     "src": "resources/js/modules/sales-items-table.js",
     "isEntry": true
   },
   "resources/js/pages/addresses-index.js": {
-    "file": "assets/addresses-index-CEiqo73H.js",
+    "file": "assets/addresses-index-XG_qzGc4.js",
     "name": "addresses-index",
     "src": "resources/js/pages/addresses-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js"
     ]
   },
   "resources/js/pages/clients-index.js": {
-    "file": "assets/clients-index-AZDexIJH.js",
+    "file": "assets/clients-index-DxmxhxO8.js",
     "name": "clients-index",
     "src": "resources/js/pages/clients-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
       "_choices-BxcHAull.js"
     ]
   },
@@ -109,229 +126,229 @@
     "isEntry": true
   },
   "resources/js/pages/inventory/inventory-index.js": {
-    "file": "assets/inventory-index-CXJwfAiF.js",
+    "file": "assets/inventory-index-BNh-q_hy.js",
     "name": "inventory-index",
     "src": "resources/js/pages/inventory/inventory-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js"
+      "resources/js/modules/po-items-table.js"
     ]
   },
   "resources/js/pages/label-studio.js": {
-    "file": "assets/label-studio-CgjFTxVr.js",
+    "file": "assets/label-studio-THGfxx2A.js",
     "name": "label-studio",
     "src": "resources/js/pages/label-studio.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js"
     ]
   },
   "resources/js/pages/product-client-mapping-index.js": {
-    "file": "assets/product-client-mapping-index-eAF38Psk.js",
+    "file": "assets/product-client-mapping-index-B-8faaT2.js",
     "name": "product-client-mapping-index",
     "src": "resources/js/pages/product-client-mapping-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js",
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/production/batches-index.js": {
-    "file": "assets/batches-index-DDPy-Ywk.js",
+    "file": "assets/batches-index-D_aEdfin.js",
     "name": "batches-index",
     "src": "resources/js/pages/production/batches-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js"
+      "resources/js/modules/po-items-table.js"
     ]
   },
   "resources/js/pages/production/bom-create.js": {
-    "file": "assets/bom-create-ebZdOlnt.js",
+    "file": "assets/bom-create-_GtoKNXn.js",
     "name": "bom-create",
     "src": "resources/js/pages/production/bom-create.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js"
+      "resources/js/modules/po-items-table.js"
     ]
   },
   "resources/js/pages/production/boms-index.js": {
-    "file": "assets/boms-index-DJlkG9PN.js",
+    "file": "assets/boms-index-BC3ro6T6.js",
     "name": "boms-index",
     "src": "resources/js/pages/production/boms-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js"
+      "resources/js/modules/po-items-table.js"
     ]
   },
   "resources/js/pages/products-index.js": {
-    "file": "assets/products-index-ZoGdJkeu.js",
+    "file": "assets/products-index-uA3wwWCx.js",
     "name": "products-index",
     "src": "resources/js/pages/products-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js"
     ]
   },
   "resources/js/pages/products-show.js": {
-    "file": "assets/products-show-C--dJC27.js",
+    "file": "assets/products-show-CKZZWClT.js",
     "name": "products-show",
     "src": "resources/js/pages/products-show.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js"
+      "resources/js/modules/po-items-table.js"
     ]
   },
   "resources/js/pages/purchase-order/grns/grns-index.js": {
-    "file": "assets/grns-index-BSHNJWle.js",
+    "file": "assets/grns-index-D5euTohM.js",
     "name": "grns-index",
     "src": "resources/js/pages/purchase-order/grns/grns-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js"
     ]
   },
   "resources/js/pages/purchase-order/purchase-order-show.js": {
-    "file": "assets/purchase-order-show-3UH9xbbB.js",
+    "file": "assets/purchase-order-show-DGqrwQEV.js",
     "name": "purchase-order-show",
     "src": "resources/js/pages/purchase-order/purchase-order-show.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
+      "resources/js/modules/po-items-table.js",
       "_choices-BxcHAull.js",
-      "resources/js/modules/po-items-table.js"
+      "_po-items-table-DMfiW0QU.js"
     ]
   },
   "resources/js/pages/purchase-orders-index.js": {
-    "file": "assets/purchase-orders-index-NodeYA1X.js",
+    "file": "assets/purchase-orders-index-DInQbqt-.js",
     "name": "purchase-orders-index",
     "src": "resources/js/pages/purchase-orders-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js",
       "resources/js/modules/po-items-table.js",
-      "resources/js/pages/clients-index.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js",
+      "_po-items-table-DMfiW0QU.js",
+      "_clients-index-C90AJKbt.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/sales-order/invoice/index.js": {
-    "file": "assets/index-C-gFYZex.js",
+    "file": "assets/index-DFo-8qRF.js",
     "name": "index",
     "src": "resources/js/pages/sales-order/invoice/index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js",
-      "resources/js/modules/sales-items-table.js",
-      "resources/js/pages/clients-index.js",
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js",
+      "_sales-items-table-BKHtIWdD.js",
+      "_clients-index-C90AJKbt.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/sales-order/invoice/show.js": {
-    "file": "assets/show-DYF4_iSQ.js",
+    "file": "assets/show-BxIyEd7p.js",
     "name": "show",
     "src": "resources/js/pages/sales-order/invoice/show.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "resources/js/modules/sales-items-table.js",
-      "resources/js/pages/clients-index.js",
-      "_dataTables-CGqb2kQY.js",
+      "resources/js/modules/po-items-table.js",
+      "_sales-items-table-BKHtIWdD.js",
+      "_clients-index-C90AJKbt.js",
+      "_dataTables-t187tmru.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/sales-order/proforma/index.js": {
-    "file": "assets/index-C9_UucX2.js",
+    "file": "assets/index-BHfsCqy7.js",
     "name": "index",
     "src": "resources/js/pages/sales-order/proforma/index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js",
-      "resources/js/modules/sales-items-table.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js",
+      "_sales-items-table-BKHtIWdD.js"
     ]
   },
   "resources/js/pages/sales-order/proforma/show.js": {
-    "file": "assets/show-Cj5UfEY6.js",
+    "file": "assets/show-C2M4QIQ3.js",
     "name": "show",
     "src": "resources/js/pages/sales-order/proforma/show.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "resources/js/modules/sales-items-table.js",
-      "resources/js/pages/clients-index.js",
-      "_dataTables-CGqb2kQY.js",
+      "resources/js/modules/po-items-table.js",
+      "_sales-items-table-BKHtIWdD.js",
+      "_clients-index-C90AJKbt.js",
+      "_dataTables-t187tmru.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/sales-order/quotation/index.js": {
-    "file": "assets/index-38D2FSLA.js",
+    "file": "assets/index-jT-ulEwz.js",
     "name": "index",
     "src": "resources/js/pages/sales-order/quotation/index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js",
-      "resources/js/modules/sales-items-table.js",
-      "resources/js/pages/clients-index.js",
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js",
+      "_sales-items-table-BKHtIWdD.js",
+      "_clients-index-C90AJKbt.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/sales-order/quotation/show.js": {
-    "file": "assets/show-4RfbE3jA.js",
+    "file": "assets/show-CnrT4WHs.js",
     "name": "show",
     "src": "resources/js/pages/sales-order/quotation/show.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "resources/js/modules/sales-items-table.js",
-      "resources/js/pages/clients-index.js",
-      "_dataTables-CGqb2kQY.js",
+      "resources/js/modules/po-items-table.js",
+      "_sales-items-table-BKHtIWdD.js",
+      "_clients-index-C90AJKbt.js",
+      "_dataTables-t187tmru.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/suppliers-index.js": {
-    "file": "assets/suppliers-index-BMjjl3H1.js",
+    "file": "assets/suppliers-index-C-u_8Vht.js",
     "name": "suppliers-index",
     "src": "resources/js/pages/suppliers-index.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
       "_choices-BxcHAull.js",
-      "resources/js/pages/clients-index.js"
+      "_clients-index-C90AJKbt.js"
     ]
   },
   "resources/js/pages/unit-product-label-create.js": {
-    "file": "assets/unit-product-label-create-Cu3NcUtc.js",
+    "file": "assets/unit-product-label-create-Dauy6WR6.js",
     "name": "unit-product-label-create",
     "src": "resources/js/pages/unit-product-label-create.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js",
-      "_jszip.min-DkSqpscl.js",
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js",
+      "_jszip.min-B_Iqyv4e.js",
       "_choices-BxcHAull.js"
     ]
   },
   "resources/js/pages/users.js": {
-    "file": "assets/users-CCEb8yS5.js",
+    "file": "assets/users-8kkjJJQI.js",
     "name": "users",
     "src": "resources/js/pages/users.js",
     "isEntry": true,
     "imports": [
-      "_jquery-DLl3eRRB.js",
-      "_dataTables-CGqb2kQY.js"
+      "resources/js/modules/po-items-table.js",
+      "_dataTables-t187tmru.js"
     ]
   }
 }

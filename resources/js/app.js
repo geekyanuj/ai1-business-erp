@@ -32,3 +32,4 @@ window.Choices = Choices; // Expose globally for use in other modules
 
 // Include images that need to be processed by Vite
 import '../images/login-banner.webp';
+import '../images/logo-wide.webp';
