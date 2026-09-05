@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/pages/dashboard.js',
                 'resources/js/pages/users.js',
+                'resources/js/pages/categories-index.js',
                 'resources/js/pages/products-index.js',
                 'resources/js/pages/products-show.js',
                 'resources/js/pages/clients-index.js',
