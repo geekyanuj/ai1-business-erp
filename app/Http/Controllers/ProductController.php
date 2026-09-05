@@ -20,10 +20,34 @@ class ProductController extends Controller
         return view('product.product-index');
     }
 
+    // public function getProducts(Request $request)
+    // {
+    //     $products = Product::with([
+    //         'category',
+    //         'subCategory',
+    //     ])->select('products.*');
+
+    //     return DataTables::of($products)
+    //         ->addColumn('category', function ($product) {
+    //             return $product->category?->name ?? '';
+    //         })
+    //         ->addColumn('sub_category', function ($product) {
+    //             return $product->subCategory?->name ?? '';
+    //         })
+    //         ->addColumn('actions', function ($product) {
+    //             return view('products.partials.actions', compact('product'))->render();
+    //         })
+    //         ->rawColumns([
+    //             'actions',
+    //         ])
+    //         ->make(true);
+    // }
+
+
     public function getProducts(Request $request)
     {
         if ($request->ajax()) {
-            $data = Product::select(['id', 'our_part_no', 'description', 'category', 'specs', 'hsn', 'created_at', 'updated_at',]);
+            $data = Product::select(['id', 'our_part_no', 'description', 'category_id', 'sub_category_id', 'specs', 'hsn', 'created_at', 'updated_at',]);
             return DataTables::of($data)
                 ->addColumn('actions', function ($product) {
                     return '
@@ -31,7 +55,8 @@ class ProductController extends Controller
                                 data-id="' . $product->id . '" 
                                 data-our_part_no="' . $product->our_part_no . '" 
                                 data-description="' . $product->description . '" 
-                                data-category="' . $product->category . '" 
+                                data-category_id="' . $product->category_id . '"
+                                data-sub_category_id="' . $product->sub_category_id . '"
                                 data-specs="' . $product->specs . '" 
                                 data-hsn="' . $product->hsn . '" 
                                 title="Edit" data-bs-toggle="modal" data-bs-target="#editProductModal">
@@ -59,21 +84,63 @@ class ProductController extends Controller
     //----------------product add ----------------------
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate([
-            'our_part_no' => 'required|string|max:255|unique:products',
-            'description' => 'nullable|string|max:512',
-            'category' => 'required|in:RF Antenna,RF Cable Assembly,RF Cable,Microwave Devices,IoT',
-            'specs' => 'nullable|string',
-            'hsn' => 'nullable|string|max:20',
+            'our_part_no' => [
+                'required',
+                'string',
+                'max:100',
+                'unique:products,our_part_no',
+            ],
+
+            'description' => [
+                'nullable',
+                'string',
+            ],
+
+            'category_id' => [
+                'required',
+                'exists:categories,id',
+            ],
+
+            'sub_category_id' => [
+                'nullable',
+                'exists:sub_categories,id',
+            ],
+
+            'specs' => [
+                'nullable',
+                'string',
+            ],
+
+            'hsn' => [
+                'nullable',
+                'string',
+                'max:20',
+            ],
         ]);
 
-        $product = new Product($validated);
+        // Make sure sub-category belongs to selected category
+        if (!empty($validated['sub_category_id'])) {
+            $validSubCategory = \App\Models\SubCategory::where('id', $validated['sub_category_id'])
+                ->where('category_id', $validated['category_id'])
+                ->exists();
 
-        $product->save();
+            if (!$validSubCategory) {
+                return back()
+                    ->withErrors([
+                        'sub_category_id' => 'Selected sub-category does not belong to the selected category.',
+                    ])
+                    ->withInput();
+            }
+        }
 
-        return redirect()->back()->with('success', 'Product created successfully.');
+        Product::create($validated);
+
+        return redirect()
+            ->route('products.index')
+            ->with('success', 'Product created successfully.');
     }
+
 
 
     public function destroy($id)
@@ -89,51 +156,64 @@ class ProductController extends Controller
 
 
     //---------------------Update the product------------------------
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return redirect()->back()->withErrors(['Product not found.']);
-        }
-
         $validated = $request->validate([
-            'our_part_no' => 'required|string|max:255|unique:products,our_part_no,' . $id,
-            'description' => 'nullable|string|max:512',
-            'category' => 'required|in:RF Antenna,RF Cable Assembly,RF Cable,Microwave Devices,IoT',
-            'specs' => 'nullable|string',
-            'hsn' => 'nullable|string|max:20',
+            'our_part_no' => [
+                'required',
+                'string',
+                'max:100',
+                'unique:products,our_part_no,' . $product->id,
+            ],
+
+            'description' => [
+                'nullable',
+                'string',
+            ],
+
+            'category_id' => [
+                'required',
+                'exists:categories,id',
+            ],
+
+            'sub_category_id' => [
+                'nullable',
+                'exists:sub_categories,id',
+            ],
+
+            'specs' => [
+                'nullable',
+                'string',
+            ],
+
+            'hsn' => [
+                'nullable',
+                'string',
+                'max:20',
+            ],
         ]);
 
-        // Capture changes before update
-        $changes = [];
+        if (!empty($validated['sub_category_id'])) {
+            $validSubCategory = \App\Models\SubCategory::where('id', $validated['sub_category_id'])
+                ->where('category_id', $validated['category_id'])
+                ->exists();
 
-        foreach ($validated as $field => $newValue) {
-            if ($product->$field != $newValue) {
-                $label = ucfirst(str_replace('_', ' ', $field));
-
-                $changes[] = "{$label} changed from \"{$product->$field}\" to \"{$newValue}\"";
+            if (!$validSubCategory) {
+                return back()
+                    ->withErrors([
+                        'sub_category_id' => 'Selected sub-category does not belong to the selected category.',
+                    ])
+                    ->withInput();
             }
         }
 
-        // Update product
         $product->update($validated);
 
-        // Log readable activity
-        if (!empty($changes)) {
-            activity()
-                ->causedBy(auth()->user())
-                ->performedOn($product)
-                ->withProperties([
-                    'changes' => $changes,
-                ])
-                ->log(
-                    "Product updated: " . implode(', ', $changes)
-                );
-        }
-
-        return redirect()->back()->with('success', 'Product updated successfully.');
+        return redirect()
+            ->route('products.index')
+            ->with('success', 'Product updated successfully.');
     }
+
 
 
     public function show($id)

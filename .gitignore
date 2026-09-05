@@ -17,3 +17,6 @@
 /.phpunit.cache
 /storage/*.key
 /storage/pail
+
+github-actions
+github-actions.pub

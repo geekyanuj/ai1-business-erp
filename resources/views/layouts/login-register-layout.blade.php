@@ -14,9 +14,10 @@
 
         <div class="row border shadow rounded-4 overflow-hidden" style="width: 900px; height: 500px;">
             <div class="col-md-6 image-container">
-                <img class="login-banner" src="{{ Vite::asset('resources/images/login-banner.webp') }}">
+                <img class="login-banner" src="{{ Vite::asset('resources/images/login-banner.webp') }}" alt="Login Banner">
             </div>
             <div class="col-md-6 ">
+                
                 @yield('content')
             </div>
         </div>

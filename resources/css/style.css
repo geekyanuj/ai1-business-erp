@@ -46,7 +46,7 @@
 /* Utility Classes */
 
 .bg-my-primary {
-    background-color: var(--primary-dark) !important;
+    background-color: var(--primary-color) !important;
 }
 
 .my-primary-color {
@@ -59,14 +59,12 @@
 
 html,
 body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-body {
     display: flex;
     height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 
@@ -107,7 +105,7 @@ body {
     background: var(--bg-gradient);
 }
 
-.login-banner{
+.login-banner {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -135,79 +133,403 @@ body {
     color: var(--secondary-color);
 }
 
-.logo {
-    height: 80px;
-    width: 200px;
-}
 
 /*------------ Login & Register Pages------------  */
 
-/*------------------ Sidebar-------------------- */
-.sidebar {
-    width: 250px;
-    background-color: var(--bg-sidebar);
-    color: var(--text-dark);
-    overflow-y: auto;
-    min-width: 250px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-light) transparent;
-    -ms-overflow-style: none;
-     scrollbar-width: none;
-    height: auto;
-    min-height: 100vh;
+/* =========================
+   FLASH MESSAGES
+========================= */
+
+.flash-message {
+    position: fixed;
+    top: 75px;
+    right: 20px;
+    width: 300px;
+    padding: 14px 18px;
+    border-radius: 6px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+    font-size: 0.9rem;
 }
 
-/* Nav link styles */
+
+/* Success */
+
+.flash-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+
+/* Error */
+
+.flash-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+/* ================== SIDEBAR ================== */
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    height: 100vh;
+    background-color: var(--bg-sidebar);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 15px !important;
+}
+
+/* ================== FIXED LOGO ================== */
+.sidebar-header {
+    flex: 0 0 auto;
+}
+
+.logo-wide {
+    display: block;
+    width: 215px;
+    height: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* Sidebar horizontal line */
+.sidebar-header hr {
+    margin: 10px 0;
+    border-color: var(--border-dark);
+}
+
+/* =========================
+   SIDEBAR MENU
+========================= */
+
+.sidebar-menu {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+}
+
+/* Sidebar scrollbar */
+
+.sidebar-menu::-webkit-scrollbar {
+    width: 0px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background-color: var(--border-light);
+    border-radius: 10px;
+}
+
+.sidebar-menu {
+    scrollbar-width: none;
+    scrollbar-color: var(--border-light) transparent;
+}
+
+/* =========================
+   SIDEBAR NAV
+========================= */
+
 .sidebar .nav-item {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .sidebar .nav-link {
     color: var(--text-dark);
+
+    border-radius: 6px;
+
+    padding: 8px 10px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
 
 .sidebar .nav-link.active {
     background-color: var(--primary-color);
+    color: #fff;
 }
 
 .sidebar .nav-link:hover {
     background-color: var(--primary-color);
-    color: #f8f9fa;
+    color: #fff;
 }
 
-/*------------------ Sidebar-------------------- */
-
-/* Main content wrapper */
-.content {
-    flex-grow: 1;
-    overflow-y: auto;
-    background-color: var(--bg-content);
-    display: flex;
-    flex-direction: column;
-}
-
-/* Inside content (scrolls with content) */
-.wrapper {
-    padding: 20px;
-}
+/* =========================
+   COLLAPSE ICON
+========================= */
 
 .transition-icon {
-    transition: transform 0.3s;
+    transition: transform 0.25s ease;
 }
 
 .nav-link[aria-expanded="true"] .transition-icon {
     transform: rotate(180deg);
 }
 
-.btn-toggle-nav .nav-link {
-    padding-left: 1.5rem;
-    font-size: 0.95rem;
+
+/* =========================
+   RIGHT CONTENT
+========================= */
+
+.content {
+    flex: 1 1 auto;
+
+    min-width: 0;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--bg-content);
+
+    overflow: hidden;
 }
 
-.btn-toggle-nav .nav-link.active {
-    color: #fff;
-    background-color: var(--primary-color);
+/* =========================
+   HEADER
+========================= */
+
+.top-navbar {
+    flex: 0 0 60px;
+
+    height: 60px;
+    min-height: 60px;
+
+    background-color: var(--bg-content);
+
+    border-bottom: 1px solid var(--border-light);
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+
+    z-index: 1000;
 }
+
+.header-inner {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
+}
+
+
+/* =========================
+   HEADER LEFT
+========================= */
+
+.header-left {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+}
+
+.welcome-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    white-space: nowrap;
+}
+
+.user-role {
+    color: var(--text-muted, #6c757d);
+    font-weight: 400;
+}
+
+
+/* =========================
+   HEADER ACTIONS
+========================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================
+   HEADER ICON BUTTONS
+========================= */
+
+.header-icon-btn {
+    position: relative;
+
+    width: 38px;
+    height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 6px;
+
+    background-color: transparent;
+    color: var(--text-dark);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.header-icon-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+
+/* =========================
+   NOTIFICATION COUNT
+========================= */
+
+.notification-btn {
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+
+    top: 2px;
+    right: 1px;
+
+    min-width: 17px;
+    height: 17px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 4px;
+
+    border-radius: 50%;
+
+    background-color: #dc3545;
+    color: #fff;
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   SEARCH DROPDOWN
+========================= */
+
+.search-dropdown {
+    width: 280px;
+
+    padding: 0;
+
+    border: 0;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================
+   COMPANY SETTINGS
+========================= */
+
+.company-settings-btn {
+    height: 38px;
+
+    border: 0;
+    border-radius: 6px;
+
+    padding: 0 12px;
+
+    background-color: transparent;
+    color: var(--text-dark);
+
+    font-size: 0.85rem;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.company-settings-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.wrapper {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    padding: 20px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* Main content scrollbar */
+
+.wrapper::-webkit-scrollbar {
+    width: 7px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--border-light);
+    border-radius: 10px;
+}
+
+.wrapper {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-light) transparent;
+}
+
+
+/* ================== FIXED FOOTER ================== */
+/* =========================
+   FOOTER
+========================= */
+
+.app-footer {
+    flex: 0 0 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 15px;
+    background-color: var(--bg-sidebar);
+    color: var(--text-dark);
+    border-top: 1px solid var(--border-light);
+    font-size: 0.7rem;
+    z-index: 1000;
+}
+
+
 
 
 .searchBox,
@@ -282,12 +604,6 @@ body {
 .lang-dropdown {
     position: relative;
     display: inline-block;
-}
-
-.sidebar {
-    height: auto;
-    min-height: 100vh;
-    overflow-y: auto;
 }
 
 .dashboard-card {

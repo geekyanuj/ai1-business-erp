@@ -1,89 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>@yield('title') - AI1 Business ERP</title>
 
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+
   @stack('styles')
 </head>
 
-<body>
-  <!-- Sidebar -->
-  <div class="sidebar d-flex flex-column p-3">
-    {{-- <img class="logo mb-3" src="{{ Vite::asset('resources/images/logo.png') }}" alt="Logo">--}}
-    <img class="logo mb-3" src="/images/logo.png" alt="Logo">
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
+<body class="app-layout">
 
-      <!-- Dashboard -->
-      <li class="nav-item">
-        <a href="{{ route('dashboard') }}"
-          class="nav-link {{ trim($__env->yieldContent('title')) === 'Dashboard' ? 'active' : '' }}">
-          <i class="fa-solid fa-house me-2"></i> Dashboard
-        </a>
-      </li>
+  {{-- =========================================================
+  SIDEBAR
+  ========================================================== --}}
+  <aside class="sidebar">
 
-      <!-- Users (Admin only) -->
-      @if (auth()->user()->role == 'Admin')
+    {{-- Fixed Sidebar Header --}}
+    <div class="sidebar-header">
+
+      <img class="logo-wide" src="{{ Vite::asset('resources/images/logo-wide.webp') }}" alt="AI1 Business ERP">
+
+      <hr>
+    </div>
+
+
+    {{-- Scrollable Sidebar Menu --}}
+    <div class="sidebar-menu">
+
+      <ul class="nav nav-pills flex-column">
+
+        {{-- Dashboard --}}
         <li class="nav-item">
-          <a href="{{ route('users.index') }}"
-            class="nav-link {{ trim($__env->yieldContent('title')) === 'Users' ? 'active' : '' }}">
-            <i class="fa-solid fa-users me-2"></i> Users
+          <a href="{{ route('dashboard') }}"
+            class="nav-link {{ trim($__env->yieldContent('title')) === 'Dashboard' ? 'active' : '' }}">
+            <i class="fa-solid fa-house me-2"></i>
+            <span>Dashboard</span>
           </a>
         </li>
-      @endif
 
-      <!-- Products -->
-      <li class="nav-item">
-        <a href="{{ route('products.index') }}"
-          class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Products', 'Product Details']) ? 'active' : '' }}">
-          <i class="fa-solid fa-layer-group me-2"></i> Products
-        </a>
-      </li>
 
-      <!-- Clients (Admin only) -->
-      @if (auth()->user()->role == 'Admin')
+        
+
+
+        {{-- Products --}}
         <li class="nav-item">
-          <a href="{{ route('clients.index') }}"
-            class="nav-link {{ trim($__env->yieldContent('title')) === 'Clients' ? 'active' : '' }}">
-            <i class="fa-solid fa-people-group me-2"></i> Clients
+          <a href="{{ route('products.index') }}"
+            class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Products', 'Product Details']) ? 'active' : '' }}">
+            <i class="fa-solid fa-layer-group me-2"></i>
+            <span>Products</span>
           </a>
         </li>
-      @endif
 
-      <!-- Clients (Admin only) -->
-      @if (auth()->user()->role == 'Admin')
-        <li class="nav-item">
-          <a href="{{ route('suppliers.index') }}"
-            class="nav-link {{ trim($__env->yieldContent('title')) === 'Suppliers' ? 'active' : '' }}">
-            <i class="fa-solid fa-random me-2"></i> Suppliers
-          </a>
-        </li>
-      @endif
 
-      <!-- Addresses (Admin only) -->
-      @if (auth()->user()->role == 'Admin')
-        <li class="nav-item">
-          <a href="{{ route('addresses.index') }}"
-            class="nav-link {{ trim($__env->yieldContent('title')) === 'Addresses' ? 'active' : '' }}">
-            <i class="fa-solid fa-map-location-dot me-2"></i> Addresses
-          </a>
-        </li>
-      @endif
+        {{-- Clients --}}
+        @if (auth()->user()->role == 'Admin')
+          <li class="nav-item">
+            <a href="{{ route('clients.index') }}"
+              class="nav-link {{ trim($__env->yieldContent('title')) === 'Clients' ? 'active' : '' }}">
+              <i class="fa-solid fa-people-group me-2"></i>
+              <span>Clients</span>
+            </a>
+          </li>
+        @endif
 
-      <!-- Orders -->
-      <li class="nav-item">
 
+        {{-- Suppliers --}}
+        @if (auth()->user()->role == 'Admin')
+          <li class="nav-item">
+            <a href="{{ route('suppliers.index') }}"
+              class="nav-link {{ trim($__env->yieldContent('title')) === 'Suppliers' ? 'active' : '' }}">
+              <i class="fa-solid fa-random me-2"></i>
+              <span>Suppliers</span>
+            </a>
+          </li>
+        @endif
+
+
+        
+
+
+        {{-- Orders --}}
         @php
+
+          $currentTitle = trim($__env->yieldContent('title'));
+
           $orderTitles = [
-            // Purchase
             'Purchase Orders',
             'Purchase Order Details',
-
-            // Sales
             'Quotations',
             'Quotation Details',
             'Proforma Invoices',
@@ -91,8 +100,6 @@
             'Tax Invoices',
             'Tax Invoice Details',
           ];
-
-          $isOrdersActive = in_array(trim($__env->yieldContent('title')), $orderTitles);
 
           $salesTitles = [
             'Quotations',
@@ -103,309 +110,374 @@
             'Tax Invoice Details',
           ];
 
-          $isSalesActive = in_array(trim($__env->yieldContent('title')), $salesTitles);
+          $isOrdersActive = in_array($currentTitle, $orderTitles);
+          $isSalesActive = in_array($currentTitle, $salesTitles);
+
         @endphp
 
-        <!-- Orders Parent -->
-        <a class="nav-link d-flex justify-content-between align-items-center {{ $isOrdersActive ? 'active' : '' }}"
-          data-bs-toggle="collapse" href="#ordersMenu" role="button"
-          aria-expanded="{{ $isOrdersActive ? 'true' : 'false' }}">
-          <span>
-            <i class="fa-solid fa-list-check me-2"></i> Orders
-          </span>
-          <i class="fas fa-chevron-down transition-icon"></i>
-        </a>
+        <li class="nav-item">
 
-        <div class="collapse {{ $isOrdersActive ? 'show' : '' }}" id="ordersMenu">
-          <ul class="list-unstyled ps-3 small">
+          <a href="#ordersMenu"
+            class="nav-link d-flex justify-content-between align-items-center {{ $isOrdersActive ? 'active' : '' }}"
+            data-bs-toggle="collapse" role="button" aria-expanded="{{ $isOrdersActive ? 'true' : 'false' }}"
+            aria-controls="ordersMenu">
+            <span>
+              <i class="fa-solid fa-list-check me-2"></i>
+              Orders
+            </span>
 
-            <!-- Purchase Orders -->
-            <li class="mt-1">
-              <a href="{{ route('purchase-orders.index') }}"
-                class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Purchase Orders', 'Purchase Order Details']) ? 'active' : '' }}">
-                Purchase Orders
-              </a>
-            </li>
-
-            <!-- Sales Orders Parent -->
-            <li class="mt-1">
-
-              <a class="nav-link d-flex justify-content-between align-items-center {{ $isSalesActive ? 'active' : '' }}"
-                data-bs-toggle="collapse" href="#salesOrdersMenu" role="button"
-                aria-expanded="{{ $isSalesActive ? 'true' : 'false' }}">
-                <span>Sales Orders</span>
-                <i class="fas fa-chevron-down transition-icon"></i>
-              </a>
-
-              <div class="collapse {{ $isSalesActive ? 'show' : '' }}" id="salesOrdersMenu">
-                <ul class="list-unstyled ps-3">
-
-                  <li class="mt-1">
-                    <a href="{{ route('quotations.index') }}"
-                      class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Quotations', 'Quotation Details']) ? 'active' : '' }}">
-                      Quotation
-                    </a>
-                  </li>
-
-                  <li class="mt-1">
-                    <a href="{{ route('proformas.index') }}"
-                      class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Proforma Invoices', 'Proforma Invoice Details']) ? 'active' : '' }}">
-                      Proforma Invoice
-                    </a>
-                  </li>
-
-                  <li class="mt-1">
-                    <a href="{{ route('invoices.index') }}"
-                      class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Tax Invoices', 'Tax Invoice Details']) ? 'active' : '' }}">
-                      Tax Invoice
-                    </a>
-                  </li>
-
-                </ul>
-              </div>
-
-            </li>
-
-          </ul>
-        </div>
-      </li>
+            <i class="fas fa-chevron-down transition-icon"></i>
+          </a>
 
 
+          <div id="ordersMenu" class="collapse {{ $isOrdersActive ? 'show' : '' }}">
+
+            <ul class="list-unstyled ps-3 small">
+
+              {{-- Purchase Orders --}}
+              <li class="mt-1">
+                <a href="{{ route('purchase-orders.index') }}"
+                  class="nav-link {{ in_array($currentTitle, ['Purchase Orders', 'Purchase Order Details']) ? 'active' : '' }}">
+                  Purchase Orders
+                </a>
+              </li>
 
 
-      <!-- Inventory with Submenu -->
-      <li class="nav-item">
-        <a class="nav-link d-flex justify-content-between align-items-center
-        {{ in_array(trim($__env->yieldContent('title')), ['Inventory', 'Inventory Details', 'Inventory Serials']) ? 'active' : '' }}"
-          data-bs-toggle="collapse" href="#inventorySubmenu" role="button"
-          aria-expanded="{{ in_array(trim($__env->yieldContent('title')), ['Inventory', 'Inventory Details', 'Inventory Serials']) ? 'true' : 'false' }}"
-          aria-controls="inventorySubmenu">
+              {{-- Sales Orders --}}
+              <li class="mt-1">
 
-          <span>
-            <i class="fa-solid fa-boxes-stacked me-2"></i> Inventory
-          </span>
+                <a href="#salesOrdersMenu"
+                  class="nav-link d-flex justify-content-between align-items-center {{ $isSalesActive ? 'active' : '' }}"
+                  data-bs-toggle="collapse" role="button" aria-expanded="{{ $isSalesActive ? 'true' : 'false' }}"
+                  aria-controls="salesOrdersMenu">
+                  <span>Sales Orders</span>
 
-          <i class="fas fa-chevron-down transition-icon"></i>
-        </a>
-
-        <div
-          class="collapse {{ in_array(trim($__env->yieldContent('title')), ['Inventory', 'Inventory Details', 'Inventory Serials']) ? 'show' : '' }}"
-          id="inventorySubmenu">
-
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-3">
-
-            <!-- Inventory List -->
-            <li class="mt-1">
-              <a href="{{ route('inventory.index') }}"
-                class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Inventory', 'Inventory Details']) ? 'active' : '' }}">
-                Inventory
-              </a>
-            </li>
-
-            <!-- Serial / Lot Tracking -->
-            <li class="mt-1">
-              <a href="{{ route('inventory-serials.index') }}"
-                class="nav-link {{ trim($__env->yieldContent('title')) === 'Inventory Serials' ? 'active' : '' }}">
-                Serial / Lot Tracking
-              </a>
-            </li>
-
-          </ul>
-        </div>
-      </li>
+                  <i class="fas fa-chevron-down transition-icon"></i>
+                </a>
 
 
-      <!-- Productions -->
-      @php
-        $productionTitles = [
-          'Production Lots',
-          'Production Lot Details',
-          'Create Production Lot',
-        ];
-        $isProductionActive = in_array(trim($__env->yieldContent('title')), $productionTitles);
-      @endphp
+                <div id="salesOrdersMenu" class="collapse {{ $isSalesActive ? 'show' : '' }}">
 
-      <!-- Production Module -->
-      <li class="nav-item">
-        <a class="nav-link d-flex justify-content-between align-items-center
-        {{ $isProductionActive ? 'active' : '' }}" data-bs-toggle="collapse" href="#productionSubmenu" role="button"
-          aria-expanded="{{ $isProductionActive ? 'true' : 'false' }}" aria-controls="productionSubmenu">
+                  <ul class="list-unstyled ps-3">
 
-          <span>
-            <i class="fa-solid fa-industry me-2"></i> Production
-          </span>
-
-          <i class="fas fa-chevron-down transition-icon"></i>
-        </a>
-
-        <div class="collapse {{ $isProductionActive ? 'show' : '' }}" id="productionSubmenu">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-3">
-
-            <!-- Production Lots -->
-            <li class="mt-1">
-              <a href="{{ route('production.batches.index') }}"
-                class="nav-link {{ in_array(trim($__env->yieldContent('title')), ['Production Lots', 'Production Lot Details', 'Create Production Lot']) ? 'active' : '' }}">
-                <i class="fa fa-industry me-1"></i> Production Lots
-              </a>
-            </li>
+                    <li class="mt-1">
+                      <a href="{{ route('quotations.index') }}"
+                        class="nav-link {{ in_array($currentTitle, ['Quotations', 'Quotation Details']) ? 'active' : '' }}">
+                        Quotation
+                      </a>
+                    </li>
 
 
-          </ul>
-        </div>
-      </li>
+                    <li class="mt-1">
+                      <a href="{{ route('proformas.index') }}"
+                        class="nav-link {{ in_array($currentTitle, ['Proforma Invoices', 'Proforma Invoice Details']) ? 'active' : '' }}">
+                        Proforma Invoice
+                      </a>
+                    </li>
 
 
-      <!-- Productions -->
-      <li class="nav-item">
-        <a href={{ route('product-client-mappings.index') }}
-          class="nav-link {{ trim($__env->yieldContent('title')) === 'Product Client Mapping' ? 'active' : '' }}">
-          <i class="fa-solid fa-map me-2"></i> Prod ⇄ Client Map
-        </a>
-      </li>
+                    <li class="mt-1">
+                      <a href="{{ route('invoices.index') }}"
+                        class="nav-link {{ in_array($currentTitle, ['Tax Invoices', 'Tax Invoice Details']) ? 'active' : '' }}">
+                        Tax Invoice
+                      </a>
+                    </li>
 
-      <!-- Order Reports -->
-      <li class="nav-item">
-        <a href="{{ route('reports.order') }}"
-          class="nav-link {{ trim($__env->yieldContent('title')) === 'Order Reports' ? 'active' : '' }}">
-          <i class="fa-solid fa-book me-2"></i> Order Reports
-        </a>
-      </li>
+                  </ul>
 
-      <!-- Label Printing with Submenu -->
-      <li class="nav-item">
-        <a class="nav-link d-flex justify-content-between align-items-center
-    {{ str_ends_with(trim($__env->yieldContent('title')), 'Labels') || in_array(trim($__env->yieldContent('title')), ['Label Studio', 'Unit Label Printing', 'Box Label Printing']) ? 'active' : '' }}"
-          data-bs-toggle="collapse" href="#labelPrintingSubmenu" role="button"
-          aria-expanded="{{ str_ends_with(trim($__env->yieldContent('title')), 'Labels') || in_array(trim($__env->yieldContent('title')), ['Label Studio', 'Unit Label Printing', 'Box Label Printing']) ? 'true' : 'false' }}"
-          aria-controls="labelPrintingSubmenu">
-          <span>
-            <i class="fa-solid fa-tags me-2"></i> Label Printing
-          </span>
+                </div>
 
-          <i class="fas fa-chevron-down transition-icon"></i>
-        </a>
+              </li>
 
-        <div
-          class="collapse {{ str_ends_with(trim($__env->yieldContent('title')), 'Labels') || in_array(trim($__env->yieldContent('title')), ['Label Studio', 'Unit Label Printing', 'Box Label Printing']) ? 'show' : '' }}"
-          id="labelPrintingSubmenu">
-          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-3">
+            </ul>
 
-            <!-- Mixed-category label workspace -->
-            <li class="mt-1">
-              <a href="{{ route('labels.studio') }}"
-                class="nav-link {{ trim($__env->yieldContent('title')) === 'Label Studio' ? 'active' : '' }}">
-                <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Label Studio
-              </a>
-            </li>
+          </div>
 
-            <li class="mt-1">
-              <a href="{{ route('labels.traceability') }}"
-                class="nav-link {{ trim($__env->yieldContent('title')) === 'Serial Traceability' ? 'active' : '' }}">
-                <i class="fa fa-magnifying-glass me-1"></i> Serial Traceability
-              </a>
-            </li>
-
-          </ul>
-        </div>
-      </li>
+        </li>
 
 
-      <!-- QC Check -->
-      <li class="nav-item">
-        <a href="{{ route('qc-check.index') }}"
-          class="nav-link {{ trim($__env->yieldContent('title')) === 'Quality Check' ? 'active' : '' }}">
-          <i class="fa-solid fa-book me-2"></i> Quality Check
-        </a>
-      </li>
+        {{-- Inventory --}}
+        @php
+          $inventoryTitles = [
+            'Inventory',
+            'Inventory Details',
+            'Inventory Serials',
+          ];
+
+          $isInventoryActive = in_array($currentTitle, $inventoryTitles);
+        @endphp
+
+        <li class="nav-item">
+
+          <a href="#inventorySubmenu"
+            class="nav-link d-flex justify-content-between align-items-center {{ $isInventoryActive ? 'active' : '' }}"
+            data-bs-toggle="collapse" role="button" aria-expanded="{{ $isInventoryActive ? 'true' : 'false' }}"
+            aria-controls="inventorySubmenu">
+            <span>
+              <i class="fa-solid fa-boxes-stacked me-2"></i>
+              Inventory
+            </span>
+
+            <i class="fas fa-chevron-down transition-icon"></i>
+          </a>
 
 
-    </ul>
-  </div>
+          <div id="inventorySubmenu" class="collapse {{ $isInventoryActive ? 'show' : '' }}">
+
+            <ul class="list-unstyled ps-3 small">
+
+              <li class="mt-1">
+                <a href="{{ route('inventory.index') }}"
+                  class="nav-link {{ in_array($currentTitle, ['Inventory', 'Inventory Details']) ? 'active' : '' }}">
+                  Inventory
+                </a>
+              </li>
 
 
-  <!-- Page Content -->
-  <div class="content">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
-      <div class="container-fluid">
-        <span>Hi, {{ auth()->user()->name }} ({{ auth()->user()->role }})</span>
-        @include('header')
-      </div>
-    </nav>
-    <!-- Main Body -->
-    <div class="wrapper">
-      @yield('content')
+              <li class="mt-1">
+                <a href="{{ route('inventory-serials.index') }}"
+                  class="nav-link {{ $currentTitle === 'Inventory Serials' ? 'active' : '' }}">
+                  Serial / Lot Tracking
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </li>
+
+
+        {{-- Production --}}
+        @php
+          $productionTitles = [
+            'Production Lots',
+            'Production Lot Details',
+            'Create Production Lot',
+          ];
+
+          $isProductionActive = in_array($currentTitle, $productionTitles);
+        @endphp
+
+        <li class="nav-item">
+
+          <a href="#productionSubmenu"
+            class="nav-link d-flex justify-content-between align-items-center {{ $isProductionActive ? 'active' : '' }}"
+            data-bs-toggle="collapse" role="button" aria-expanded="{{ $isProductionActive ? 'true' : 'false' }}"
+            aria-controls="productionSubmenu">
+            <span>
+              <i class="fa-solid fa-industry me-2"></i>
+              Production
+            </span>
+
+            <i class="fas fa-chevron-down transition-icon"></i>
+          </a>
+
+
+          <div id="productionSubmenu" class="collapse {{ $isProductionActive ? 'show' : '' }}">
+
+            <ul class="list-unstyled ps-3 small">
+
+              <li class="mt-1">
+                <a href="{{ route('production.batches.index') }}"
+                  class="nav-link {{ in_array($currentTitle, ['Production Lots', 'Production Lot Details', 'Create Production Lot']) ? 'active' : '' }}">
+                  <i class="fa fa-industry me-1"></i>
+                  Production Lots
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+        </li>
+
+
+        {{-- Product Client Mapping --}}
+        <li class="nav-item">
+          <a href="{{ route('product-client-mappings.index') }}"
+            class="nav-link {{ $currentTitle === 'Product Client Mapping' ? 'active' : '' }}">
+            <i class="fa-solid fa-map me-2"></i>
+            <span>Prod ⇄ Client Map</span>
+          </a>
+        </li>
+
+
+        
+
+
+        {{-- Labels--}}
+        @php
+          $labelTitles = [
+            'Label Studio',
+            'Serial Traceability',
+            'Unit Label Printing',
+            'Box Label Printing',
+          ];
+
+          $isLabelActive =
+            str_ends_with($currentTitle, 'Labels') ||
+            in_array($currentTitle, $labelTitles);
+        @endphp
+
+        <li class="nav-item">
+
+          <a href="#labelPrintingSubmenu"
+            class="nav-link d-flex justify-content-between align-items-center {{ $isLabelActive ? 'active' : '' }}"
+            data-bs-toggle="collapse" role="button" aria-expanded="{{ $isLabelActive ? 'true' : 'false' }}"
+            aria-controls="labelPrintingSubmenu">
+            <span>
+              <i class="fa-solid fa-tags me-2"></i>
+              Label Printing
+            </span>
+
+            <i class="fas fa-chevron-down transition-icon"></i>
+          </a>
+
+
+          <div id="labelPrintingSubmenu" class="collapse {{ $isLabelActive ? 'show' : '' }}">
+
+            <ul class="list-unstyled ps-3 small">
+
+              <li class="mt-1">
+                <a href="{{ route('labels.studio') }}"
+                  class="nav-link {{ $currentTitle === 'Label Studio' ? 'active' : '' }}">
+                  <i class="fa-solid fa-wand-magic-sparkles me-1"></i>
+                  Label Studio
+                </a>
+              </li>
+
+
+              <li class="mt-1">
+                <a href="{{ route('labels.traceability') }}"
+                  class="nav-link {{ $currentTitle === 'Serial Traceability' ? 'active' : '' }}">
+                  <i class="fa fa-magnifying-glass me-1"></i>
+                  Serial Traceability
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </li>
+
+
+        {{-- Quality Check --}}
+        <li class="nav-item">
+          <a href="{{ route('qc-check.index') }}"
+            class="nav-link {{ $currentTitle === 'Quality Check' ? 'active' : '' }}">
+            <i class="fa-solid fa-book me-2"></i>
+            <span>Quality Check</span>
+          </a>
+        </li>
+
+
+        {{-- Users --}}
+        @if (auth()->user()->role == 'Admin')
+          <li class="nav-item">
+            <a href="{{ route('users.index') }}"
+              class="nav-link {{ trim($__env->yieldContent('title')) === 'Users' ? 'active' : '' }}">
+              <i class="fa-solid fa-users me-2"></i>
+              <span>Users</span>
+            </a>
+          </li>
+        @endif
+
+        {{-- Addresses --}}
+        @if (auth()->user()->role == 'Admin')
+          <li class="nav-item">
+            <a href="{{ route('addresses.index') }}"
+              class="nav-link {{ trim($__env->yieldContent('title')) === 'Addresses' ? 'active' : '' }}">
+              <i class="fa-solid fa-map-location-dot me-2"></i>
+              <span>Addresses</span>
+            </a>
+          </li>
+        @endif
+
+      </ul>
+
     </div>
+
+  </aside>
+
+
+  {{-- =========================================================
+  RIGHT SIDE
+  ========================================================== --}}
+  <main class="content">
+
+    {{-- Fixed Header --}}
+    <header class="top-navbar">
+      @include('header')
+    </header>
+
+
+    {{-- Scrollable Page Content --}}
+    <section class="wrapper">
+      @yield('content')
+    </section>
+
+
+    {{-- Fixed Footer --}}
     @include('footer')
 
-    @if (session('success'))
-      <div id="success-message" style="
-                                          position: fixed;
-                                          top: 60px;
-                                          right: 20px;
-                                          background-color: #d4edda;
-                                          color: #155724;
-                                          padding: 15px 20px;
-                                          border-left: 5px solid #28a745;
-                                          border-radius: 5px;
-                                          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                                          z-index: 9999;
-                                          width:300px;
-                                      ">
-        {{ session('success') }}
-      </div>
-    @endif
+  </main>
 
-    @if (session('error'))
-      <div id="error-message" style="
-                                          position: fixed;
-                                          top: 60px;
-                                          right: 20px;
-                                          width:300px;
-                                          background-color: #f8d7da;
-                                          color: #721c24;
-                                          padding: 15px 20px;
-                                          border-left: 5px solid #dc3545;
-                                          border-radius: 5px;
-                                          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                                          z-index: 9999;
-                                      ">
-        {{ session('error') }}
-      </div>
-    @endif
 
-    @if ($errors->any())
-      <div id="error-message" style="
-                                          position: fixed;
-                                          top: 60px;
-                                          right: 20px;
-                                          width:300px;
-                                          background-color: #f8d7da;
-                                          color: #721c24;
-                                          padding: 15px 20px;
-                                          border-left: 5px solid #dc3545;
-                                          border-radius: 5px;
-                                          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                                          z-index: 9999;
-                                      ">
-        {{ $errors->first() }}
-      </div>
-    @endif
-  </div>
+  {{-- =========================================================
+  FLASH MESSAGES
+  ========================================================== --}}
 
+  @if (session('success'))
+    <div id="success-message" class="flash-message flash-success">
+      {{ session('success') }}
+    </div>
+  @endif
+
+
+  @if (session('error'))
+    <div id="error-message" class="flash-message flash-error">
+      {{ session('error') }}
+    </div>
+  @endif
+
+
+  @if ($errors->any())
+    <div id="error-message" class="flash-message flash-error">
+      {{ $errors->first() }}
+    </div>
+  @endif
+
+
+  {{-- =========================================================
+  SCRIPTS
+  ========================================================== --}}
 
   <script>
-    // Auto-hide the messages after 3 seconds
-    setTimeout(function () {
-      const successMsg = document.getElementById('success-message');
-      const errorMsg = document.getElementById('error-message');
-      if (successMsg) successMsg.style.display = 'none';
-      if (errorMsg) errorMsg.style.display = 'none';
-    }, 3000); // 3000ms = 3 seconds
+    document.addEventListener('DOMContentLoaded', function () {
+
+      setTimeout(function () {
+
+        const successMsg = document.getElementById('success-message');
+        const errorMsg = document.getElementById('error-message');
+
+        if (successMsg) {
+          successMsg.remove();
+        }
+
+        if (errorMsg) {
+          errorMsg.remove();
+        }
+
+      }, 3000);
+
+    });
   </script>
+
 
   @stack('modals')
   @stack('scripts')
+
 </body>
 
 </html>

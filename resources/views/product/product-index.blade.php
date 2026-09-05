@@ -18,12 +18,9 @@
                     <div>
                         <!-- Category Filter -->
                         <select id="categoryFilter" class="form-select form-select-sm" style="width: 200px;">
+
                             <option value="">All Categories</option>
-                            <option value="RF Antenna">RF Antenna</option>
-                            <option value="RF Cable Assembly">RF Cable Assembly</option>
-                            <option value="RF Cable">RF Cable</option>
-                            <option value="Microwave Devices">Microwave Devices</option>
-                            <option value="IoT">IoT</option>
+
                         </select>
                     </div>
 
@@ -44,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <!-- <th>ID</th> -->
-                                    <th>Our Part No</th>
+                                    <th>Model/Part No</th>
                                     {{-- <th>Description</th> --}}
                                     <th>Category</th>
                                     <th>Specs</th>
@@ -76,37 +73,49 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="our_part_no" class="form-label mb-1 required-field">Our Part No</label>
-                                <input type="text" name="our_part_no" id="our_part_no" class="form-control" required>
+                                <label for="our_part_no" class="form-label mb-1 required-field">Model/Part No</label>
+                                <input type="text" name="our_part_no" id="our_part_no" class="form-control form-control-sm"
+                                    required>
                             </div>
                             <div class="col-md-4">
                                 <label for="category" class="form-label mb-1 required-field">Category</label>
-                                <select name="category" id="category" class="form-select" required>
-                                    <option value="RF Antenna" selected>RF Antenna</option>
-                                    <option value="RF Cable Assembly">RF Cable Assembly</option>
-                                    <option value="RF Cable">RF Cable</option>
-                                    <option value="Microwave Devices">Microwave Devices</option>
-                                    <option value="IoT">IoT</option>
+                                <select name="category_id" id="category" class="form-select form-select-sm" required>
+
+                                    <option value="">Loading categories...</option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sub_category" class="form-label mb-1">
+                                    Sub Category
+                                </label>
+
+                                <select name="sub_category_id" id="sub_category" class="form-select form-select-sm"
+                                    disabled>
+
+                                    <option value="">Select Sub Category</option>
+
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="hsn" class="form-label mb-1">HSN</label>
-                                <input type="text" name="hsn" id="hsn" class="form-control">
+                                <input type="text" name="hsn" id="hsn" class="form-control form-control-sm">
                             </div>
                             <div class="col-md-12">
                                 <label for="description" class="form-label mb-1">Description</label>
-                                <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+                                <textarea name="description" id="description" class="form-control form-control-sm"
+                                    rows="3"></textarea>
                             </div>
                             <div class="col-md-12">
                                 <label for="specs" class="form-label mb-1">Specifications</label>
-                                <textarea name="specs" id="specs" class="form-control" rows="3"></textarea>
+                                <textarea name="specs" id="specs" class="form-control form-control-sm" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer py-2">
                         <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary btn-sm px-3">
+                        <button type="submit" class="btn btn-primary bg-my-primary btn-sm px-3">
                             <i class="fas fa-save me-1"></i> Save Product
                         </button>
                     </div>
@@ -132,38 +141,46 @@
                         <input type="hidden" name="id" id="editProductId">
                         <div class="row g-3">
                             <div class="col-md-4">
-                                <label for="editProductPartNo" class="form-label mb-1 required-field">Our Part No</label>
-                                <input type="text" name="our_part_no" id="editProductPartNo" class="form-control">
+                                <label for="editProductPartNo" class="form-label mb-1 required-field">Model/Part No</label>
+                                <input type="text" name="our_part_no" id="editProductPartNo"
+                                    class="form-control form-control-sm" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="editProductCategory" class="form-label mb-1 required-field">Category</label>
-                                <select name="category" id="editProductCategory" class="form-select" required>
-                                    <option value="RF Antenna" selected>RF Antenna</option>
-                                    <option value="RF Cable Assembly">RF Cable Assembly</option>
-                                    <option value="RF Cable">RF Cable</option>
-                                    <option value="Microwave Devices">Microwave Devices</option>
-                                    <option value="IoT">IoT</option>
+                                <select name="category_id" id="editProductCategory" class="form-select form-select-sm"
+                                    required>
+                                    <option value="">Loading categories...</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="editProductSubCategory" class="form-label mb-1">
+                                    Sub Category
+                                </label>
+                                <select name="sub_category_id" id="editProductSubCategory"
+                                    class="form-select form-select-sm" disabled>
+                                    <option value="">Select Sub Category</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label for="hsn" class="form-label mb-1">HSN</label>
-                                <input type="text" name="hsn" class="form-control" id="editProductHsn">
+                                <input type="text" name="hsn" class="form-control form-control-sm" id="editProductHsn">
                             </div>
                             <div class="col-md-12">
                                 <label for="editProductDescription" class="form-label mb-1">Description</label>
-                                <textarea name="description" id="editProductDescription" class="form-control"
-                                    rows="3"></textarea>
+                                <textarea name="description" id="editProductDescription"
+                                    class="form-control form-control-sm" rows="3"></textarea>
                             </div>
                             <div class="col-md-12">
                                 <label for="editProductSpecs" class="form-label mb-1">Specifications</label>
-                                <textarea name="specs" id="editProductSpecs" class="form-control" rows="3"></textarea>
+                                <textarea name="specs" id="editProductSpecs" class="form-control form-control-sm"
+                                    rows="3"></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer py-2">
                         <button type="button" class="btn btn-secondary btn-sm px-3" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary btn-sm px-3">Update Product</button>
+                        <button type="submit" class="btn btn-primary bg-my-primary btn-sm px-3">Update Product</button>
                     </div>
                 </form>
             </div>

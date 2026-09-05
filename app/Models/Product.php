@@ -8,22 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 
-    public static function categories(): array
-    {
-        return ['RF Antenna', 'RF Cable Assembly', 'RF Cable', 'Microwave Devices', 'IoT'];
-    }
-
     protected $table = 'products';
 
     protected $fillable = [
         'our_part_no',
         'description',
-        'category',
+        'category_id',
+        'sub_category_id',
         'specs',
         'hsn',
         'created_at',
         'updated_at',
     ];
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }
+
+
 
     public function clientMappings()
     {

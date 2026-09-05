@@ -1,11 +1,5 @@
 <?php
 
-use App\Http\Controllers\BomController;
-use App\Http\Controllers\CompanySettingsController;
-use App\Http\Controllers\GeneralSettingController;
-use App\Http\Controllers\GrnController;
-use App\Http\Controllers\SalesInvoicePaymentController;
-use App\Http\Controllers\SupplierSerialSearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminAuth;
 
@@ -14,11 +8,14 @@ use App\Http\Controllers\{
     AuthController,
     UserController,
     ProductController,
+    CategoryController,
     ClientController,
     SalesQuotationController,
     SalesProformaController,
     SalesInvoiceController,
     ProductClientMappingController,
+    SalesInvoicePaymentController,
+    SupplierSerialSearchController,
     InventoryController,
     InventorySerialNumberController,
     ProductionBatchController,
@@ -30,12 +27,14 @@ use App\Http\Controllers\{
     AuditLogController,
     NotificationController,
     ActivityLogController,
-    ProductClientMappingsController,
     LabelController,
-    LabelItemController,
     SupplierController,
     QcController,
+    GrnController,
     AddressController,
+    GeneralSettingController,
+    CompanySettingsController,
+
 };
 
 /*
@@ -380,6 +379,40 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/{id}/upload-file', [ProductController::class, 'uploadFile'])->name('product.uploadFile');
     Route::delete('/products/files/{id}', [ProductController::class, 'deleteFile'])->name('product.deleteFile');
     Route::resource('products', ProductController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | CATEGORIES
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/categories/data', [CategoryController::class, 'getCategories'])
+        ->name('categories.data');
+
+    Route::get('/categories/options', [CategoryController::class, 'options'])
+        ->name('categories.options');
+
+    Route::get(
+        '/categories/{category}/sub-categories',
+        [CategoryController::class, 'subCategories']
+    )->name('categories.sub-categories');
+
+    Route::post(
+        '/categories/{category}/sub-categories',
+        [CategoryController::class, 'storeSubCategory']
+    )->name('categories.sub-categories.store');
+
+    Route::put(
+        '/categories/{category}/sub-categories/{subCategory}',
+        [CategoryController::class, 'updateSubCategory']
+    )->name('categories.sub-categories.update');
+
+    Route::delete(
+        '/categories/{category}/sub-categories/{subCategory}',
+        [CategoryController::class, 'destroySubCategory']
+    )->name('categories.sub-categories.destroy');
+
+    Route::resource('categories', CategoryController::class);
+
 
 
     /*
